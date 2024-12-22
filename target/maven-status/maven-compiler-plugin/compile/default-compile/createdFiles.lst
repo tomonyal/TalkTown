@@ -2,3 +2,7 @@ com\talktown\LoginServlet.class
 com\talktown\UserRegistrationServlet.class
 com\talktown\DatabaseConnection.class
 com\talktown\UserDAO.class
+com\talktown\PostServlet.class
+com\talktown\PostDAO.class
+com\talktown\NewPostServlet.class
+com\talktown\Post.class

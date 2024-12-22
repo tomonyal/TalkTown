@@ -3,7 +3,7 @@
 <html>
 <head>
     <title>アカウント作成</title>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/accountCreate.css">
 </head>
 <body>
     <h2>アカウント作成</h2>

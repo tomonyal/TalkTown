@@ -3,7 +3,7 @@
 <html>
 <head>
     <title>ログイン</title>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/login.css">
 </head>
 <body>
     <h2>ログイン</h2>
