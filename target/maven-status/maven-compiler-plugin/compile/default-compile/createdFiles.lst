@@ -1,0 +1,4 @@
+com\talktown\LoginServlet.class
+com\talktown\UserRegistrationServlet.class
+com\talktown\DatabaseConnection.class
+com\talktown\UserDAO.class
