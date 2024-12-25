@@ -1,0 +1,88 @@
+/* 基本スタイル */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+/* タイトル */
+h2, h3 {
+    color: #333;
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* コンテナ */
+.container {
+    margin-top: 60px; /* ナビゲーションの高さ分のマージンを追加 */
+    padding: 20px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* フォームスタイル */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.form-group input[type="text"], .form-group input[type="email"], .form-group input[type="password"], .form-group input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.form-group input[type="submit"] {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.form-group input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* ユーザー情報スタイル */
+.user-info {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.user-info p {
+    margin: 5px 0;
+}
+
+/* 編集ボタンスタイル */
+.edit-button {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.edit-button form {
+    display: inline-block;
+}
+
+.edit-button input[type="submit"] {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.edit-button input[type="submit"]:hover {
+    background-color: #0056b3;
+}

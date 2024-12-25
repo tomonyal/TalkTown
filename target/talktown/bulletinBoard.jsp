@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ include file="header.jsp" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.talktown.Post" %>
 <!DOCTYPE html>
@@ -11,7 +12,8 @@
     <h2>掲示板</h2>
     <div class="container">
         <div class="header">
-            <button class="new-post"><a href="newPost.jsp">新規投稿</a></button>
+            <% String prefecture = request.getParameter("prefecture"); %>
+            <button class="new-post"><a href="newPost.jsp?prefecture=<%= prefecture %>">新規投稿</a></button>
             <div class="filter">
                 <label for="city">市区町村で絞り込み:</label>
                 <select id="city" name="city" onchange="filterPosts()">

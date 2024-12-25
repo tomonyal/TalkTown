@@ -70,4 +70,55 @@ public class UserDAO {
             }
         }
     }
+
+    /**
+     * ユーザーを認証します
+     *
+     * @param username ユーザー名
+     * @param password パスワード
+     * @return 認証されたユーザー
+     * @throws SQLException データベース操作エラー
+     */
+    public User authenticate(String username, String password) throws SQLException {
+        String query = "SELECT * FROM users WHERE username = ? AND password = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, password);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    User user = new User();
+                    user.setUserId(resultSet.getInt("user_id"));
+                    user.setUsername(resultSet.getString("username"));
+                    user.setPassword(resultSet.getString("password")); // Passwordの設定
+                    user.setEmail(resultSet.getString("email"));
+                    return user;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * ユーザーIDによってユーザー情報を取得します
+     *
+     * @param userId ユーザーID
+     * @return ユーザー情報
+     * @throws SQLException データベース操作エラー
+     */
+    public User getUserById(int userId) throws SQLException {
+        String query = "SELECT * FROM users WHERE user_id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, userId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    User user = new User();
+                    user.setUserId(resultSet.getInt("user_id"));
+                    user.setUsername(resultSet.getString("username"));
+                    user.setEmail(resultSet.getString("email"));
+                    return user;
+                }
+            }
+        }
+        return null;
+    }
 }

@@ -2,17 +2,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>ログイン</title>
+    <title>ログインページ</title>
     <link rel="stylesheet" type="text/css" href="css/login.css">
 </head>
 <body>
     <h2>ログイン</h2>
     <form action="login" method="post">
-        ユーザー名: <input type="text" name="username" required><br>
-        パスワード: <input type="password" name="password" required><br>
+        <input type="text" name="username" placeholder="ユーザー名" required>
+        <input type="password" name="password" placeholder="パスワード" required>
         <input type="submit" value="ログイン">
     </form>
-    <br>
-    <p>アカウントをお持ちでない場合は、<a href="createAccount.jsp">こちらで作成</a>してください。</p>
+    <p><a href="register.jsp">アカウントを作成</a></p>
+    <p><a href="mainPage.jsp">ログインせずに続行</a></p>
 </body>
 </html>

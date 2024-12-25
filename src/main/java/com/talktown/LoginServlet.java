@@ -5,9 +5,11 @@ import java.sql.SQLException;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
  * ログインサーブレット
@@ -34,9 +36,20 @@ public class LoginServlet extends HttpServlet {
         try {
             // ユーザーの認証
             UserDAO userDAO = new UserDAO();
-            if (userDAO.validateUser(username, password)) {
-                response.setContentType("text/html");
-                response.getWriter().write("ログイン成功！");
+            User user = userDAO.authenticate(username, password);
+
+            if (user != null) {
+                // セッションの作成
+                HttpSession session = request.getSession();
+                session.setAttribute("user", user);
+
+                // クッキーにユーザー情報を保存
+                Cookie userCookie = new Cookie("user", user.getUsername());
+                userCookie.setMaxAge(60 * 60); // 1時間
+                response.addCookie(userCookie);
+
+                // メインページにリダイレクト
+                response.sendRedirect("mainPage.jsp");
             } else {
                 response.setContentType("text/html");
                 response.getWriter().write("無効なユーザー名またはパスワードです。");

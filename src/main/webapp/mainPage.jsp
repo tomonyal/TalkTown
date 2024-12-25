@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ include file="header.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,26 +7,22 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
-    <h2>メインページ</h2>
-    <nav>
-        <ul>
-            <li><a href="login.jsp">ログイン / アカウント作成</a></li>
-        </ul>
-    </nav>
-    <h3>都道府県一覧</h3>
-    <div class="regions-container">
-        <div class="region-block">
-            <h4>北海道・東北</h4>
-            <ul>
-                <li><a href="posts?prefecture=北海道">北海道</a></li>
-                <li><a href="posts?prefecture=青森県">青森県</a></li>
-                <li><a href="posts?prefecture=岩手県">岩手県</a></li>
-                <li><a href="posts?prefecture=宮城県">宮城県</a></li>
-                <li><a href="posts?prefecture=秋田県">秋田県</a></li>
-                <li><a href="posts?prefecture=山形県">山形県</a></li>
-                <li><a href="posts?prefecture=福島県">福島県</a></li>
-            </ul>
-        </div>
+    <div class="main-content">
+        <h2>メインページ</h2>
+        <h3>都道府県一覧</h3>
+        <div class="regions-container">
+            <div class="region-block">
+                <h4>北海道・東北</h4>
+                <ul>
+                    <li><a href="posts?prefecture=北海道">北海道</a></li>
+                    <li><a href="posts?prefecture=青森県">青森県</a></li>
+                    <li><a href="posts?prefecture=岩手県">岩手県</a></li>
+                    <li><a href="posts?prefecture=宮城県">宮城県</a></li>
+                    <li><a href="posts?prefecture=秋田県">秋田県</a></li>
+                    <li><a href="posts?prefecture=山形県">山形県</a></li>
+                    <li><a href="posts?prefecture=福島県">福島県</a></li>
+                </ul>
+            </div>
         <div class="region-block">
             <h4>関東</h4>
             <ul>
