@@ -29,23 +29,23 @@ public class PostDAO {
         try (PreparedStatement preparedStatement = connection.prepareStatement(query);
              ResultSet resultSet = preparedStatement.executeQuery()) {
             while (resultSet.next()) {
-                Post post = new Post();
+                Post post = new Post(
+                    resultSet.getInt("user_id"),
+                    resultSet.getString("subject"),
+                    resultSet.getString("content"),
+                    resultSet.getString("prefectures"),
+                    resultSet.getString("city"),
+                    resultSet.getInt("height"),
+                    resultSet.getInt("weight"),
+                    resultSet.getInt("age"),
+                    resultSet.getString("email"),
+                    resultSet.getString("sex"),
+                    resultSet.getBoolean("is_premium"),
+                    resultSet.getInt("like_count")
+                );
                 post.setPostId(resultSet.getInt("post_id"));
-                post.setUserId(resultSet.getInt("user_id"));
-                post.setCategoryId(resultSet.getInt("category_id"));
-                post.setSubject(resultSet.getString("subject"));
-                post.setContent(resultSet.getString("content"));
-                post.setPrefectures(resultSet.getString("prefectures"));
-                post.setCity(resultSet.getString("city"));
-                post.setHeight(resultSet.getInt("height"));
-                post.setWeight(resultSet.getInt("weight"));
-                post.setAge(resultSet.getInt("age"));
-                post.setEmail(resultSet.getString("email"));
-                post.setSex(resultSet.getString("sex"));
-                post.setIsPremium(resultSet.getBoolean("is_premium"));
-                post.setLikeCount(resultSet.getInt("like_count"));
-                post.setCreateAt(resultSet.getDate("create_at"));
-                post.setUpdateAt(resultSet.getDate("update_at"));
+                post.setCreateAt(resultSet.getDate("created_at"));
+                post.setUpdateAt(resultSet.getDate("updated_at"));
                 posts.add(post);
             }
         }
@@ -66,23 +66,23 @@ public class PostDAO {
             preparedStatement.setString(1, city);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
-                    Post post = new Post();
+                    Post post = new Post(
+                        resultSet.getInt("user_id"),
+                        resultSet.getString("subject"),
+                        resultSet.getString("content"),
+                        resultSet.getString("prefectures"),
+                        resultSet.getString("city"),
+                        resultSet.getInt("height"),
+                        resultSet.getInt("weight"),
+                        resultSet.getInt("age"),
+                        resultSet.getString("email"),
+                        resultSet.getString("sex"),
+                        resultSet.getBoolean("is_premium"),
+                        resultSet.getInt("like_count")
+                    );
                     post.setPostId(resultSet.getInt("post_id"));
-                    post.setUserId(resultSet.getInt("user_id"));
-                    post.setCategoryId(resultSet.getInt("category_id"));
-                    post.setSubject(resultSet.getString("subject"));
-                    post.setContent(resultSet.getString("content"));
-                    post.setPrefectures(resultSet.getString("prefectures"));
-                    post.setCity(resultSet.getString("city"));
-                    post.setHeight(resultSet.getInt("height"));
-                    post.setWeight(resultSet.getInt("weight"));
-                    post.setAge(resultSet.getInt("age"));
-                    post.setEmail(resultSet.getString("email"));
-                    post.setSex(resultSet.getString("sex"));
-                    post.setIsPremium(resultSet.getBoolean("is_premium"));
-                    post.setLikeCount(resultSet.getInt("like_count"));
-                    post.setCreateAt(resultSet.getDate("create_at"));
-                    post.setUpdateAt(resultSet.getDate("update_at"));
+                    post.setCreateAt(resultSet.getDate("created_at"));
+                    post.setUpdateAt(resultSet.getDate("updated_at"));
                     posts.add(post);
                 }
             }
@@ -104,23 +104,23 @@ public class PostDAO {
             preparedStatement.setString(1, prefectures);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
-                    Post post = new Post();
+                    Post post = new Post(
+                        resultSet.getInt("user_id"),
+                        resultSet.getString("subject"),
+                        resultSet.getString("content"),
+                        resultSet.getString("prefectures"),
+                        resultSet.getString("city"),
+                        resultSet.getInt("height"),
+                        resultSet.getInt("weight"),
+                        resultSet.getInt("age"),
+                        resultSet.getString("email"),
+                        resultSet.getString("sex"),
+                        resultSet.getBoolean("is_premium"),
+                        resultSet.getInt("like_count")
+                    );
                     post.setPostId(resultSet.getInt("post_id"));
-                    post.setUserId(resultSet.getInt("user_id"));
-                    post.setCategoryId(resultSet.getInt("category_id"));
-                    post.setSubject(resultSet.getString("subject"));
-                    post.setContent(resultSet.getString("content"));
-                    post.setPrefectures(resultSet.getString("prefectures"));
-                    post.setCity(resultSet.getString("city"));
-                    post.setHeight(resultSet.getInt("height"));
-                    post.setWeight(resultSet.getInt("weight"));
-                    post.setAge(resultSet.getInt("age"));
-                    post.setEmail(resultSet.getString("email"));
-                    post.setSex(resultSet.getString("sex"));
-                    post.setIsPremium(resultSet.getBoolean("is_premium"));
-                    post.setLikeCount(resultSet.getInt("like_count"));
-                    post.setCreateAt(resultSet.getDate("create_at"));
-                    post.setUpdateAt(resultSet.getDate("update_at"));
+                    post.setCreateAt(resultSet.getDate("created_at"));
+                    post.setUpdateAt(resultSet.getDate("updated_at"));
                     posts.add(post);
                 }
             }
@@ -135,21 +135,20 @@ public class PostDAO {
      * @throws SQLException データベース操作エラー
      */
     public void addPost(Post post) throws SQLException {
-        String query = "INSERT INTO posts (userId, categoryId, subject, content, prefectures, city, height, weight, age, email, sex, isPremium, likeCount, createAt, updateAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())";
+        String query = "INSERT INTO posts (user_id, subject, content, prefectures, city, height, weight, age, email, sex, is_premium, like_count, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, post.getUserId());
-            preparedStatement.setInt(2, post.getCategoryId());
-            preparedStatement.setString(3, post.getSubject());
-            preparedStatement.setString(4, post.getContent());
-            preparedStatement.setString(5, post.getPrefectures());
-            preparedStatement.setString(6, post.getCity());
-            preparedStatement.setInt(7, post.getHeight());
-            preparedStatement.setInt(8, post.getWeight());
-            preparedStatement.setInt(9, post.getAge());
-            preparedStatement.setString(10, post.getEmail());
-            preparedStatement.setString(11, post.getSex());
-            preparedStatement.setBoolean(12, post.isPremium());
-            preparedStatement.setInt(13, post.getLikeCount());
+            preparedStatement.setString(2, post.getSubject());
+            preparedStatement.setString(3, post.getContent());
+            preparedStatement.setString(4, post.getPrefectures());
+            preparedStatement.setString(5, post.getCity());
+            preparedStatement.setInt(6, post.getHeight());
+            preparedStatement.setInt(7, post.getWeight());
+            preparedStatement.setInt(8, post.getAge());
+            preparedStatement.setString(9, post.getEmail());
+            preparedStatement.setString(10, post.getSex());
+            preparedStatement.setBoolean(11, post.isPremium());
+            preparedStatement.setInt(12, post.getLikeCount());
             preparedStatement.executeUpdate();
         }
     }

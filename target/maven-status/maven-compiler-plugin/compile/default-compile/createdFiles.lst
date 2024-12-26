@@ -7,5 +7,6 @@ com\talktown\UserDAO.class
 com\talktown\PostServlet.class
 com\talktown\PostDAO.class
 com\talktown\User.class
+com\talktown\AccountUpdateServlet.class
 com\talktown\NewPostServlet.class
 com\talktown\Post.class

@@ -3,30 +3,35 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/header.css">
 </head>
 <body>
     <header>
         <nav>
             <ul>
                 <%
-                    HttpSession currentSession = request.getSession(false); // セッションを定義
+                    HttpSession currentSession = request.getSession(false);
                     if (currentSession != null && currentSession.getAttribute("user") != null) {
-                %>
-                <li style="float: left;"><a href="logout">ログアウト</a></li>
-                <li style="float: left;"><a href="mainPage.jsp">メインページ</a></li>
-                <li class="user-info">
-                    <% 
                         User user = (User) currentSession.getAttribute("user");
-                        out.print("ようこそ, " + user.getUsername() + " さん<br>");
-                        out.print("<a href='accountSettings' class='account-settings-link'>アカウント設定</a>");
+                %>
+                <li><a href="logout">ログアウト</a></li>
+                <li><a href="mainPage.jsp">メインページ</a></li>
+                <li class="user-info">
+                    <span>ポイント残高: <%= user.getPoint() %> ポイント</span>
+                    <% 
+                        out.print("ようこそ, " + user.getUsername() + " さん");
                     %>
+                    <a href='accountSettings' class='account-settings-link'>アカウント設定</a>
                 </li>
                 <% } else { %>
-                <li style="float: left;"><a href="mainPage.jsp">メインページ</a></li>
-                <li style="float: left;"><a href="login.jsp">ログイン</a></li>
+                <li><a href="mainPage.jsp">メインページ</a></li>
+                <li><a href="login.jsp">ログイン</a></li>
                 <% } %>
             </ul>
         </nav>
     </header>
     <div class="main-content">
+        <!-- メインコンテンツがここに表示されます -->
+    </div>
+</body>
+</html>

@@ -39,10 +39,9 @@ public class UserRegistrationServlet extends HttpServlet {
         String sex = request.getParameter("sex");
         String type = "nomal"; // デフォルトのユーザータイプを設定
 
-        UserDAO userDAO;
         try {
             // ユーザー情報をデータベースに保存
-            userDAO = new UserDAO();
+            UserDAO userDAO = new UserDAO();
             userDAO.registerUser(username, password, email, city, height, weight, birthDate, sex, type);
 
             // 登録完了画面へリダイレクト

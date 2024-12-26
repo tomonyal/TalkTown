@@ -23,8 +23,9 @@ public class UserDAO {
     }
 
     /**
-     * ユーザーをデータベースに登録します。
+     * ユーザー情報を更新します
      *
+     * @param userId ユーザーID
      * @param username ユーザー名
      * @param password パスワード
      * @param email メールアドレス
@@ -36,6 +37,91 @@ public class UserDAO {
      * @param type ユーザータイプ
      * @throws SQLException データベース操作エラー
      */
+    public void updateUser(int userId, String username, String password, String email, String city, int height, int weight, Date birthDate, String sex, String type) throws SQLException {
+        String query = "UPDATE users SET username = ?, password = ?, email = ?, city = ?, height = ?, weight = ?, birth_date = ?, sex = ?, type = ? WHERE user_id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, password);
+            preparedStatement.setString(3, email);
+            preparedStatement.setString(4, city);
+            preparedStatement.setInt(5, height);
+            preparedStatement.setInt(6, weight);
+            preparedStatement.setDate(7, birthDate);
+            preparedStatement.setString(8, sex);
+            preparedStatement.setString(9, type);
+            preparedStatement.setInt(10, userId);
+            preparedStatement.executeUpdate();
+        }
+    }
+
+    /**
+     * ユーザーIDによってユーザー情報を取得します
+     *
+     * @param userId ユーザーID
+     * @return ユーザー情報
+     * @throws SQLException データベース操作エラー
+     */
+    public User getUserById(int userId) throws SQLException {
+        String query = "SELECT user_id, username, password, email, type, point, city, height, weight, birth_date, sex FROM users WHERE user_id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, userId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    User user = new User(
+                        resultSet.getInt("user_id"),
+                        resultSet.getString("username"),
+                        resultSet.getString("password"),
+                        resultSet.getString("email"),
+                        resultSet.getString("type"),
+                        resultSet.getInt("point"),
+                        resultSet.getString("city"),
+                        resultSet.getInt("height"),
+                        resultSet.getInt("weight"),
+                        resultSet.getDate("birth_date"),
+                        resultSet.getString("sex")
+                    );
+                    return user;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * ユーザーを認証します
+     *
+     * @param username ユーザー名
+     * @param password パスワード
+     * @return 認証されたユーザー
+     * @throws SQLException データベース操作エラー
+     */
+    public User authenticate(String username, String password) throws SQLException {
+        String query = "SELECT user_id, username, password, email, type, point, city, height, weight, birth_date, sex FROM users WHERE username = ? AND password = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, password);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    User user = new User(
+                        resultSet.getInt("user_id"),
+                        resultSet.getString("username"),
+                        resultSet.getString("password"),
+                        resultSet.getString("email"),
+                        resultSet.getString("type"),
+                        resultSet.getInt("point"),
+                        resultSet.getString("city"),
+                        resultSet.getInt("height"),
+                        resultSet.getInt("weight"),
+                        resultSet.getDate("birth_date"),
+                        resultSet.getString("sex")
+                    );
+                    return user;
+                }
+            }
+        }
+        return null;
+    }
+
     public void registerUser(String username, String password, String email, String city, int height, int weight, Date birthDate, String sex, String type) throws SQLException {
         String query = "INSERT INTO users (username, password, email, city, height, weight, birth_date, sex, type) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -51,74 +137,5 @@ public class UserDAO {
             preparedStatement.executeUpdate();
         }
     }
-
-    /**
-     * ユーザーの認証を行います。
-     *
-     * @param username ユーザー名
-     * @param password パスワード
-     * @return 認証成功の場合はtrue、それ以外はfalse
-     * @throws SQLException データベース操作エラー
-     */
-    public boolean validateUser(String username, String password) throws SQLException {
-        String query = "SELECT * FROM users WHERE username = ? AND password = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, username);
-            preparedStatement.setString(2, password);
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                return resultSet.next();
-            }
-        }
-    }
-
-    /**
-     * ユーザーを認証します
-     *
-     * @param username ユーザー名
-     * @param password パスワード
-     * @return 認証されたユーザー
-     * @throws SQLException データベース操作エラー
-     */
-    public User authenticate(String username, String password) throws SQLException {
-        String query = "SELECT * FROM users WHERE username = ? AND password = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, username);
-            preparedStatement.setString(2, password);
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    User user = new User();
-                    user.setUserId(resultSet.getInt("user_id"));
-                    user.setUsername(resultSet.getString("username"));
-                    user.setPassword(resultSet.getString("password")); // Passwordの設定
-                    user.setEmail(resultSet.getString("email"));
-                    return user;
-                }
-            }
-        }
-        return null;
-    }
-
-    /**
-     * ユーザーIDによってユーザー情報を取得します
-     *
-     * @param userId ユーザーID
-     * @return ユーザー情報
-     * @throws SQLException データベース操作エラー
-     */
-    public User getUserById(int userId) throws SQLException {
-        String query = "SELECT * FROM users WHERE user_id = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setInt(1, userId);
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    User user = new User();
-                    user.setUserId(resultSet.getInt("user_id"));
-                    user.setUsername(resultSet.getString("username"));
-                    user.setEmail(resultSet.getString("email"));
-                    return user;
-                }
-            }
-        }
-        return null;
-    }
+    
 }

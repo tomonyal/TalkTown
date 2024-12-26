@@ -5,7 +5,6 @@ import java.util.Date;
 public class Post {
     private int postId;
     private int userId;
-    private int categoryId;
     private String subject;
     private String content;
     private String prefectures;
@@ -20,7 +19,23 @@ public class Post {
     private Date createAt;
     private Date updateAt;
 
-    // Getters and Setters
+    // コンストラクタ
+    public Post(int userId, String subject, String content, String prefectures, String city, int height, int weight, int age, String email, String sex, boolean isPremium, int likeCount) {
+        this.userId = userId;
+        this.subject = subject;
+        this.content = content;
+        this.prefectures = prefectures;
+        this.city = city;
+        this.height = height;
+        this.weight = weight;
+        this.age = age;
+        this.email = email;
+        this.sex = sex;
+        this.isPremium = isPremium;
+        this.likeCount = likeCount;
+    }
+
+    // ゲッターとセッター
     public int getPostId() {
         return postId;
     }
@@ -35,14 +50,6 @@ public class Post {
 
     public void setUserId(int userId) {
         this.userId = userId;
-    }
-
-    public int getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
     }
 
     public String getSubject() {
