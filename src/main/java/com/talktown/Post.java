@@ -1,4 +1,5 @@
 package com.talktown;
+
 import java.sql.Timestamp;
 
 public class Post {
@@ -17,6 +18,8 @@ public class Post {
     private int likeCount;
     private Timestamp createAt;
     private Timestamp updateAt;
+    private String imagePath;
+    private String s3Url;
 
     // コンストラクタ
     public Post(int userId, String subject, String content, String prefectures, String city, int height, int weight, int age, String email, String sex, boolean isPremium, int likeCount) {
@@ -34,7 +37,14 @@ public class Post {
         this.likeCount = likeCount;
     }
 
-    // ゲッターとセッター
+    public String getS3Url() {
+        return s3Url;
+    }
+
+    public void setS3Url(String s3Url) {
+        this.s3Url = s3Url;
+    }    
+
     public int getPostId() {
         return postId;
     }
@@ -153,5 +163,13 @@ public class Post {
 
     public void setUpdateAt(Timestamp updateAt) {
         this.updateAt = updateAt;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+    
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 }

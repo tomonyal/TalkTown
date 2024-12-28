@@ -1,5 +1,6 @@
 com\talktown\ReportServlet.class
 com\talktown\AccountSettingsServlet.class
+com\talktown\S3Util.class
 com\talktown\LogoutServlet.class
 com\talktown\DatabaseConnection.class
 com\talktown\PostDetailServlet.class
@@ -10,6 +11,8 @@ com\talktown\UserRegistrationServlet.class
 com\talktown\ReportDAO.class
 com\talktown\UserDAO.class
 com\talktown\PostServlet.class
+com\talktown\EmailUtil.class
 com\talktown\AccountUpdateServlet.class
+com\talktown\Cities.class
 com\talktown\NewPostServlet.class
 com\talktown\Post.class

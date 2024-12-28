@@ -49,6 +49,7 @@ public class PostDAO {
                 post.setPostId(resultSet.getInt("post_id"));
                 post.setCreateAt(resultSet.getTimestamp("created_at"));
                 post.setUpdateAt(resultSet.getTimestamp("updated_at"));
+                post.setS3Url(resultSet.getString("s3_url"));
                 posts.add(post);
             }
         }
@@ -86,6 +87,7 @@ public class PostDAO {
                     post.setPostId(resultSet.getInt("post_id"));
                     post.setCreateAt(resultSet.getTimestamp("created_at"));
                     post.setUpdateAt(resultSet.getTimestamp("updated_at"));
+                    post.setS3Url(resultSet.getString("s3_url"));
                     posts.add(post);
                 }
             }
@@ -124,6 +126,7 @@ public class PostDAO {
                     post.setPostId(resultSet.getInt("post_id"));
                     post.setCreateAt(resultSet.getTimestamp("created_at"));
                     post.setUpdateAt(resultSet.getTimestamp("updated_at"));
+                    post.setS3Url(resultSet.getString("s3_url"));
                     posts.add(post);
                 }
             }
@@ -138,7 +141,7 @@ public class PostDAO {
      * @throws SQLException データベース操作エラー
      */
     public void addPost(Post post) throws SQLException {
-        String query = "INSERT INTO posts (user_id, subject, content, prefectures, city, height, weight, age, email, sex, is_premium, like_count, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())";
+        String query = "INSERT INTO posts (user_id, subject, content, prefectures, city, height, weight, age, email, sex, is_premium, like_count, s3_url, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, post.getUserId());
             preparedStatement.setString(2, post.getSubject());
@@ -152,9 +155,11 @@ public class PostDAO {
             preparedStatement.setString(10, post.getSex());
             preparedStatement.setBoolean(11, post.isPremium());
             preparedStatement.setInt(12, post.getLikeCount());
+            preparedStatement.setString(13, post.getS3Url());
             preparedStatement.executeUpdate();
         }
     }
+
     public Post getPostById(int postId) throws SQLException {
         String query = "SELECT * FROM posts WHERE post_id = ?";
         Post post = null;
@@ -179,6 +184,7 @@ public class PostDAO {
                     post.setPostId(resultSet.getInt("post_id"));
                     post.setCreateAt(resultSet.getTimestamp("created_at"));
                     post.setUpdateAt(resultSet.getTimestamp("updated_at"));
+                    post.setS3Url(resultSet.getString("s3_url"));
                 }
             }
         }

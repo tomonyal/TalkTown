@@ -3,18 +3,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>管理者への要望・違反報告等</title>
+    <title>管理者への要望・報告等</title>
     <link rel="stylesheet" type="text/css" href="css/requestPage.css">
 </head>
 <body>
     <div class="main-content">
-        <h2>管理者への要望・違反報告等</h2>
+        <h2>管理者への要望・報告等</h2>
         <form action="submitRequest" method="post">
             <div class="form-group">
                 <label for="requestType">要望の種類:</label>
                 <select id="requestType" name="requestType">
                     <option value="要望">要望</option>
-                    <option value="違反報告">違反報告</option>
+                    <option value="報告">報告</option>
+                    <option value="その他">その他</option>
                 </select>
             </div>
             <div class="form-group">

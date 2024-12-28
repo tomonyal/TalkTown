@@ -19,11 +19,19 @@
                 <div class="form-group-inline">
                     <div>
                         <label for="prefectures">都道府県:</label>
-                        <input type="text" id="prefectures" name="prefectures" value="<%= request.getParameter("prefecture") %>" required>
+                        <input type="text" id="prefectures" name="prefectures" value="<%= request.getParameter("prefecture") %>" readonly style="background-color: #e9ecef;">
                     </div>
                     <div>
                         <label for="city">市区町村:</label>
-                        <input type="text" id="city" name="city" value="<%= session != null && session.getAttribute("user") != null ? ((User)session.getAttribute("user")).getCity() : "" %>" required>
+                        <select id="city" name="city" required>
+                            <option value="">市区町村を選択してください</option>
+                            <% String[] cities = (String[]) request.getAttribute("cities");
+                            String selectedCity = (String) request.getAttribute("selectedCity");
+                            if (cities != null) {
+                                for (String city : cities) { %>
+                                    <option value="<%= city %>" <%= city.equals(selectedCity) ? "selected" : "" %>><%= city %></option>
+                            <% } } %>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group-inline">
@@ -39,6 +47,14 @@
                         <label for="age">年齢:</label>
                         <input type="number" id="age" name="age" value="<%= session != null && session.getAttribute("user") != null ? ((User)session.getAttribute("user")).getAge() : "" %>">
                     </div>
+                </div>
+                <div class="form-group">
+                    <label for="sex">性別:</label>
+                    <select id="sex" name="sex" required>
+                        <option value="male">男性</option>
+                        <option value="female">女性</option>
+                        <option value="other">その他</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="subject">件名:</label>
