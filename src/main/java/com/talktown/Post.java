@@ -1,6 +1,5 @@
 package com.talktown;
-
-import java.util.Date;
+import java.sql.Timestamp;
 
 public class Post {
     private int postId;
@@ -16,8 +15,8 @@ public class Post {
     private String sex;
     private boolean isPremium;
     private int likeCount;
-    private Date createAt;
-    private Date updateAt;
+    private Timestamp createAt;
+    private Timestamp updateAt;
 
     // コンストラクタ
     public Post(int userId, String subject, String content, String prefectures, String city, int height, int weight, int age, String email, String sex, boolean isPremium, int likeCount) {
@@ -140,19 +139,19 @@ public class Post {
         this.likeCount = likeCount;
     }
 
-    public Date getCreateAt() {
+    public Timestamp getCreateAt() {
         return createAt;
     }
 
-    public void setCreateAt(Date createAt) {
+    public void setCreateAt(Timestamp createAt) {
         this.createAt = createAt;
     }
 
-    public Date getUpdateAt() {
+    public Timestamp getUpdateAt() {
         return updateAt;
     }
 
-    public void setUpdateAt(Date updateAt) {
+    public void setUpdateAt(Timestamp updateAt) {
         this.updateAt = updateAt;
     }
 }

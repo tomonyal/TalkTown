@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * 投稿に関連するデータベース操作を行うDAOクラス
@@ -16,6 +17,8 @@ public class PostDAO {
     public PostDAO() throws SQLException {
         this.connection = DatabaseConnection.getInstance().getConnection();
     }
+
+    private static final Logger logger = Logger.getLogger(PostDAO.class.getName());
 
     /**
      * 全ての投稿を取得します。
@@ -44,8 +47,8 @@ public class PostDAO {
                     resultSet.getInt("like_count")
                 );
                 post.setPostId(resultSet.getInt("post_id"));
-                post.setCreateAt(resultSet.getDate("created_at"));
-                post.setUpdateAt(resultSet.getDate("updated_at"));
+                post.setCreateAt(resultSet.getTimestamp("created_at"));
+                post.setUpdateAt(resultSet.getTimestamp("updated_at"));
                 posts.add(post);
             }
         }
@@ -81,8 +84,8 @@ public class PostDAO {
                         resultSet.getInt("like_count")
                     );
                     post.setPostId(resultSet.getInt("post_id"));
-                    post.setCreateAt(resultSet.getDate("created_at"));
-                    post.setUpdateAt(resultSet.getDate("updated_at"));
+                    post.setCreateAt(resultSet.getTimestamp("created_at"));
+                    post.setUpdateAt(resultSet.getTimestamp("updated_at"));
                     posts.add(post);
                 }
             }
@@ -119,8 +122,8 @@ public class PostDAO {
                         resultSet.getInt("like_count")
                     );
                     post.setPostId(resultSet.getInt("post_id"));
-                    post.setCreateAt(resultSet.getDate("created_at"));
-                    post.setUpdateAt(resultSet.getDate("updated_at"));
+                    post.setCreateAt(resultSet.getTimestamp("created_at"));
+                    post.setUpdateAt(resultSet.getTimestamp("updated_at"));
                     posts.add(post);
                 }
             }
@@ -151,5 +154,34 @@ public class PostDAO {
             preparedStatement.setInt(12, post.getLikeCount());
             preparedStatement.executeUpdate();
         }
+    }
+    public Post getPostById(int postId) throws SQLException {
+        String query = "SELECT * FROM posts WHERE post_id = ?";
+        Post post = null;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, postId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    post = new Post(
+                        resultSet.getInt("user_id"),
+                        resultSet.getString("subject"),
+                        resultSet.getString("content"),
+                        resultSet.getString("prefectures"),
+                        resultSet.getString("city"),
+                        resultSet.getInt("height"),
+                        resultSet.getInt("weight"),
+                        resultSet.getInt("age"),
+                        resultSet.getString("email"),
+                        resultSet.getString("sex"),
+                        resultSet.getBoolean("is_premium"),
+                        resultSet.getInt("like_count")
+                    );
+                    post.setPostId(resultSet.getInt("post_id"));
+                    post.setCreateAt(resultSet.getTimestamp("created_at"));
+                    post.setUpdateAt(resultSet.getTimestamp("updated_at"));
+                }
+            }
+        }
+        return post;
     }
 }

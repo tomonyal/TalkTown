@@ -7,6 +7,14 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
+    <!-- 管理人からのメッセージ枠をここに追加 -->
+    <div class="admin-message">
+        <h3>管理人からのメッセージ</h3>
+        <p>ここに管理人からの重要なお知らせやメッセージが表示されます。</p>
+    </div>
+    <div class="admin-request">
+        <a href="requestPage.jsp">管理者への要望・違反報告等はこちら</a>
+    </div>
     <div class="main-content">
         <h2>メインページ</h2>
         <h3>都道府県一覧</h3>

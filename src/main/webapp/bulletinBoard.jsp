@@ -2,14 +2,17 @@
 <%@ include file="header.jsp" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.talktown.Post" %>
+<%@ page import="java.time.LocalDateTime" %>
+<%@ page import="java.time.format.DateTimeFormatter" %>
+<%@ page import="java.sql.Timestamp" %>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>掲示板</title>
+    <title><%= request.getParameter("prefecture") %> - 掲示板</title>
     <link rel="stylesheet" type="text/css" href="css/bulletinBoard.css">
 </head>
 <body>
-    <h2>掲示板</h2>
+    <h2><%= request.getParameter("prefecture") %> - 掲示板</h2>
     <div class="container">
         <div class="header">
             <% String prefecture = request.getParameter("prefecture"); %>
@@ -28,16 +31,29 @@
             <h3>投稿一覧</h3>
             <%
                 List<Post> posts = (List<Post>) request.getAttribute("posts");
+                String selectedCity = request.getParameter("city");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
                 if (posts != null) {
                     for (Post post : posts) {
+                        String genderClass = post.getSex().equals("men") ? "male" : post.getSex().equals("women") ? "female" : "";
+                        String formattedCreateAt = post.getCreateAt().toLocalDateTime().format(formatter);
             %>
-                        <div class="post">
-                            <h4><%= post.getSubject() %></h4>
-                            <p><%= post.getContent() %></p>
-                            <p><small><%= post.getCity() %> - <%= post.getCreateAt() %></small></p>
+                        <div class="post <%= genderClass %>">
+                            <a href="postDetail?id=<%= post.getPostId() %>&prefecture=<%= prefecture %>&city=<%= selectedCity %>">
+                            <% if (selectedCity == null || selectedCity.isEmpty()) { %>
+                                <span class="city-name">市区町村: <%= post.getCity() %></span><br>
+                            <% } %>
+                                - <%= post.getSubject() %> 
+                                <br>- 身長: <%= post.getHeight() %>cm - 体重: <%= post.getWeight() %>kg - 年齢: <%= post.getAge() %> - 性別: <%= post.getSex().equals("men") ? "男" : post.getSex().equals("women") ? "女" : post.getSex() %>
+                                <br>- 登録日: <%= formattedCreateAt %>
+                            </a>
                         </div>
             <%
                     }
+                } else {
+            %>
+                    <p>投稿が見つかりません。</p>
+            <%
                 }
             %>
         </div>
@@ -49,7 +65,8 @@
 <script>
 function filterPosts() {
     var city = document.getElementById("city").value;
-    window.location.href = "posts?city=" + city;
+    var prefecture = "<%= prefecture %>";
+    window.location.href = "posts?city=" + city + "&prefecture=" + prefecture;
 }
 </script>
 </html>

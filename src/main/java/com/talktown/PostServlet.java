@@ -24,7 +24,7 @@ public class PostServlet extends HttpServlet {
         List<Post> posts = null;
         try {
             postDAO = new PostDAO();
-            if (city == null || city.isEmpty()) {
+            if (city == null || city.equals("null") || city.isEmpty()) {
                 posts = postDAO.getPostsByPrefectures(prefecture);
             } else {
                 posts = postDAO.getPostsByCity(city);

@@ -1,0 +1,140 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+/* ヘッダー */
+header {
+    background-color: #007bff;
+    padding: 10px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    text-align: center;
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 10px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    color: white;
+}
+
+nav ul li a:hover {
+    background-color: #0056b3;
+    color: white;
+}
+
+.user-info {
+    font-size: 16px;
+    color: white;
+    float: right;
+    margin-right: 20px;
+}
+
+/* アカウント設定リンクのスタイル */
+.account-settings-link {
+    color: white;
+    text-decoration: none;
+    padding: 5px 10px;
+    background-color: #007bff;
+    border-radius: 4px;
+    margin-top: 5px;
+    display: inline-block;
+}
+
+.account-settings-link:hover {
+    background-color: #0056b3;
+}
+
+/* メインコンテンツ */
+.main-content {
+    padding-top: 70px; /* ヘッダーの高さ分のパディングを追加 */
+    width: 80%;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+/* フォームのスタイル */
+.form-group {
+    margin: 15px 0;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="email"],
+textarea,
+select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.submit-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    display: block;
+    margin: 0 auto;
+}
+
+.submit-button:hover {
+    background-color: #0056b3;
+}
+
+.footer {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.footer button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.footer button a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.footer button:hover {
+    background-color: #0056b3;
+}
