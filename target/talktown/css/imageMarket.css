@@ -1,0 +1,170 @@
+/* ベーススタイル */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
+    text-align: center;
+}
+
+header nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+header nav ul li {
+    display: inline;
+    margin-right: 10px;
+}
+
+header nav ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2 {
+    color: #333;
+}
+
+h2 {
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+}
+
+.upload-button {
+    margin-bottom: 20px;
+    text-align: right;
+}
+
+.upload-button .button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.upload-button .button:hover {
+    background-color: #0056b3;
+}
+
+/* 画像一覧セクション */
+.images-section {
+    margin-bottom: 20px;
+}
+
+.images-section table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.images-section th, .images-section td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.images-section th {
+    background-color: #333;
+    color: #fff;
+}
+
+/* 画像アイテム */
+.image-item {
+    display: inline-block;
+    width: 30%;
+    margin-right: 1.5%;
+    margin-bottom: 20px;
+    vertical-align: top;
+}
+
+.image-item img {
+    width: 100%;
+    height: auto;
+}
+
+.image-item p {
+    margin: 5px 0;
+}
+
+.image-item button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+.image-item button:hover {
+    background-color: #0056b3;
+}
+
+/* アップロードフォームのスタイル */
+.upload-section .form-group {
+    margin-bottom: 15px;
+}
+
+.upload-section label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+}
+
+.upload-section input[type="file"],
+.upload-section select,
+.upload-section textarea {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+}
+
+.upload-section input[type="number"] {
+    width: 80px; /* 少し広げました */
+}
+
+.upload-section select {
+    width: 100px; /* 少し広げました */
+}
+
+.upload-section textarea {
+    resize: vertical; /* ユーザーがテキストエリアのサイズを変更可能 */
+}
+
+.upload-section button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.upload-section button:hover {
+    background-color: #0056b3;
+}
+
+.alert {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}

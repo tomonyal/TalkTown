@@ -103,7 +103,7 @@ public class PostDAO {
      * @throws SQLException データベース操作エラー
      */
     public List<Post> getPostsByPrefectures(String prefectures) throws SQLException {
-        String query = "SELECT * FROM posts WHERE prefectures = ?";
+        String query = "SELECT * FROM posts WHERE prefectures = ? ORDER BY created_at DESC";
         List<Post> posts = new ArrayList<>();
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, prefectures);

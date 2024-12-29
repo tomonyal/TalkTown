@@ -105,7 +105,7 @@
     </div>
     <h3>画像市場</h3>
     <div class="image-market">
-        <a href="imageMarket.jsp">画像市場へ</a>
+        <a href="imageMarket">画像市場へ</a>
     </div>
     <h3>上位ユーザー</h3>
     <ul class="top-users">

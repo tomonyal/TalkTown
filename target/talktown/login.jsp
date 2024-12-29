@@ -12,7 +12,7 @@
         <input type="password" name="password" placeholder="パスワード" required>
         <input type="submit" value="ログイン">
     </form>
-    <p><a href="register.jsp">アカウントを作成</a></p>
+    <p><a href="createAccount.jsp">アカウントを作成</a></p>
     <p><a href="mainPage.jsp">ログインせずに続行</a></p>
 </body>
 </html>
