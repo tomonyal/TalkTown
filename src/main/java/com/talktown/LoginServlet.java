@@ -50,11 +50,12 @@ public class LoginServlet extends HttpServlet {
                 // クッキーにユーザー情報を保存
                 Cookie userCookie = new Cookie("user", user.getUsername());
                 userCookie.setMaxAge(60 * 60); // 1時間
-                userCookie.setPath("/talktown"); // パスを一致させる
+                userCookie.setPath("/"); // パスをルートに設定
                 userCookie.setSecure(true); // セキュア属性を追加
                 userCookie.setHttpOnly(true); // HttpOnly属性を追加
                 userCookie.setDomain("talktown.net"); // 適切なドメインに設定
                 response.addCookie(userCookie);
+
 
                 // メインページにリダイレクト
                 response.sendRedirect("mainPage.jsp");
