@@ -42,6 +42,14 @@ public class UserRegistrationServlet extends HttpServlet {
         try {
             // ユーザー情報をデータベースに保存
             UserDAO userDAO = new UserDAO();
+
+            // ユーザー名の重複チェック
+            if (userDAO.isUsernameTaken(username)) {
+                request.setAttribute("error", "ユーザー名が既に使われています。");
+                request.getRequestDispatcher("createAccount.jsp").forward(request, response);
+                return;
+            }
+
             userDAO.registerUser(username, password, email, city, height, weight, birthDate, sex, type);
 
             // 登録完了画面へリダイレクト

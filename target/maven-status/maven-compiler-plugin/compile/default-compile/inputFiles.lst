@@ -8,6 +8,7 @@ c:\Users\tomoy\projects\talktown\TalkTown\src\main\java\com\talktown\LoginServle
 c:\Users\tomoy\projects\talktown\TalkTown\src\main\java\com\talktown\UserDAO.java
 c:\Users\tomoy\projects\talktown\TalkTown\src\main\java\com\talktown\PostDAO.java
 c:\Users\tomoy\projects\talktown\TalkTown\src\main\java\com\talktown\DatabaseConnection.java
+c:\Users\tomoy\projects\talktown\TalkTown\src\main\java\com\talktown\SecurityUtils.java
 c:\Users\tomoy\projects\talktown\TalkTown\src\main\java\com\talktown\LogoutServlet.java
 c:\Users\tomoy\projects\talktown\TalkTown\src\main\java\com\talktown\Cities.java
 c:\Users\tomoy\projects\talktown\TalkTown\src\main\java\com\talktown\ImageMarketDAO.java
@@ -17,6 +18,7 @@ c:\Users\tomoy\projects\talktown\TalkTown\src\main\java\com\talktown\ImageMarket
 c:\Users\tomoy\projects\talktown\TalkTown\src\main\java\com\talktown\Post.java
 c:\Users\tomoy\projects\talktown\TalkTown\src\main\java\com\talktown\S3Util.java
 c:\Users\tomoy\projects\talktown\TalkTown\src\main\java\com\talktown\UploadImageServlet.java
+c:\Users\tomoy\projects\talktown\TalkTown\src\main\java\com\talktown\DeletePostServlet.java
 c:\Users\tomoy\projects\talktown\TalkTown\src\main\java\com\talktown\AccountUpdateServlet.java
 c:\Users\tomoy\projects\talktown\TalkTown\src\main\java\com\talktown\PostServlet.java
 c:\Users\tomoy\projects\talktown\TalkTown\src\main\java\com\talktown\NewPostServlet.java

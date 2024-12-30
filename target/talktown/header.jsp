@@ -4,6 +4,7 @@
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="css/header.css">
+    <meta name="viewport" content="width=device-width">
 </head>
 <body>
     <header>
@@ -25,13 +26,13 @@
                 </li>
                 <% } else { %>
                 <li><a href="mainPage.jsp">メインページ</a></li>
-                <li><a href="login.jsp">ログイン</a></li>
+                <li><a href="login.jsp">ログイン・ユーザ登録</a></li>
                 <% } %>
             </ul>
         </nav>
     </header>
-    <div class="main-content">
-        <!-- メインコンテンツがここに表示されます -->
-    </div>
+    <% if (request.getAttribute("error") != null) { %>
+        <div class="error-message"><%= request.getAttribute("error") %></div>
+    <% } %>
 </body>
 </html>

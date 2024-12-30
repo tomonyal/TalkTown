@@ -122,3 +122,15 @@ h2 {
 .footer button:hover {
     background-color: #0056b3;
 }
+
+/* デフォルトのスタイル */
+.filter label {
+    display: block;
+}
+
+/* メディアクエリ（スマホ版） */
+@media (max-width: 768px) {
+    .filter label {
+        display: none; /* スマホ版で非表示にする */
+    }
+}

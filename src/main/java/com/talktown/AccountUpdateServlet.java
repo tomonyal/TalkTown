@@ -24,12 +24,10 @@ public class AccountUpdateServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String email = request.getParameter("email");
-        String city = request.getParameter("city");
         int height = Integer.parseInt(request.getParameter("height"));
         int weight = Integer.parseInt(request.getParameter("weight"));
         Date birthDate = Date.valueOf(request.getParameter("birthDate"));
         String sex = request.getParameter("sex");
-        String type = request.getParameter("type");
 
         try {
             // セッションからユーザーIDを取得
@@ -38,20 +36,25 @@ public class AccountUpdateServlet extends HttpServlet {
                 User user = (User) session.getAttribute("user");
                 int userId = user.getUserId();
 
+                // パスワードが入力された場合のみ更新
+                if (password != null && !password.isEmpty()) {
+                    password = SecurityUtils.hashPassword(password);
+                    user.setPassword(password);
+                } else {
+                    password = user.getPassword(); // 現在のパスワードを維持
+                }
+
                 // ユーザー情報を更新
                 UserDAO userDAO = new UserDAO();
-                userDAO.updateUser(userId, username, password, email, city, height, weight, birthDate, sex, type);
+                userDAO.updateUser(userId, username, password, email, height, weight, birthDate, sex);
 
                 // 更新した情報をセッションに反映
                 user.setUsername(username);
-                user.setPassword(password);
                 user.setEmail(email);
-                user.setCity(city);
                 user.setHeight(height);
                 user.setWeight(weight);
                 user.setBirthDate(birthDate);
                 user.setSex(sex);
-                user.setType(type);
 
                 // アカウント管理ページへリダイレクト
                 response.sendRedirect("accountSettings.jsp");

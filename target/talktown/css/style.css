@@ -108,7 +108,6 @@ nav ul li a:hover {
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    width: 250px; /* 各ブロックの幅を調整 */
     transition: transform 0.2s ease;
 }
 
@@ -194,6 +193,37 @@ a:hover {
     transition: transform 0.2s ease;
 }
 
-.top-users li:hover {
-    transform: translateY(-5px);
+/* メディアクエリ（スマホ版） */
+@media screen and (max-width: 768px) {
+
+    .regions-container {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .region-block {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        width: 90%; /* 各ブロックの幅を調整 */
+        transition: transform 0.2s ease;
+    }
+}
+
+/* メディアクエリ（デスクトップ版） */
+@media screen and (min-width: 769px) {
+
+    .regions-container {
+        flex-wrap: wrap; 
+        justify-content: center; 
+        gap: 20px; 
+        padding: 20px;
+    }
+
+    .region-block {
+        width: 250px; /* 各ブロックの幅を調整 */
+    }
 }

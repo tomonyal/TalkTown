@@ -1,112 +1,70 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
-}
-
-h2 {
-    text-align: center;
-    color: #333;
-}
+/* postDetail.css */
 
 .container {
     width: 80%;
     margin: 0 auto;
-    background-color: #fff;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
 }
 
 .post-detail {
-    margin-bottom: 20px;
+    background-color: #fff;
     padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-}
-
-.post-detail h3 {
-    color: #555;
-    margin-top: 0;
-}
-
-.post-detail p {
-    font-size: 16px;
-    line-height: 1.6;
-    color: #666;
-    margin: 10px 0;
-}
-
-.post-detail p span.label {
-    font-weight: bold;
-    color: #333;
-}
-
-.post-detail p small {
-    display: block;
-    color: #999;
-}
-
-.footer {
-    text-align: center;
-    margin-top: 20px;
-}
-
-.footer button {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-
-.footer button a {
-    color: #fff;
-    text-decoration: none;
-}
-
-.footer button:hover {
-    background-color: #0056b3;
-}
-
-hr {
-    border: 0;
-    border-top: 1px solid #ddd;
-    margin: 20px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .info-group {
     display: flex;
     justify-content: space-between;
-    flex-wrap: wrap;
+    margin-bottom: 10px;
 }
 
-.info-group p {
-    flex: 1;
-    margin: 0 10px;
-    min-width: 150px;
+.label {
+    font-weight: bold;
 }
 
-/* メールするボタンのスタイル */
+.image-section {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.image-section img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.footer {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.mail-button a,
+.back a {
+    text-decoration: none;
+    color: #fff;
+}
+
 .mail-button {
     background-color: #007bff;
     color: #fff;
-    border: none;
     padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
     cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-    margin-top: 10px;
 }
 
-.mail-button a {
+.mail-button a:hover,
+.back a:hover {
     color: #fff;
-    text-decoration: none;
 }
 
-.mail-button:hover {
-    background-color: #0056b3;
+.back {
+    background-color: #555;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
 }

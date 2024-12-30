@@ -20,7 +20,7 @@
                 <div class="account-user-info">
                     <p>ユーザーID: <%= user.getUserId() %></p>
                     <p>ユーザー名: <%= user.getUsername() %></p>
-                    <p>パスワード: <%= user.getPassword() %></p>
+                    <p>パスワード: ••••••••••••••••••••••••••••••••••••••••••••••••••</p>
                     <p>メールアドレス: <%= user.getEmail() %></p>
                     <p>ユーザータイプ: <%= user.getType() %></p>
                     <p>ポイント: <%= user.getPoint() %></p>

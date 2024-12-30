@@ -14,6 +14,7 @@ public class User {
     private int weight;
     private Date birthDate;
     private String sex;
+    private boolean isLocked;
 
     // コンストラクタ
     public User(int userId, String username, String password, String email, String type, int point, String city, int height, int weight, Date birthDate, String sex) {
@@ -125,5 +126,13 @@ public class User {
         }
         long ageInMillis = System.currentTimeMillis() - birthDate.getTime();
         return (int) (ageInMillis / 1000L / 60L / 60L / 24L / 365L);
+    }
+
+    public boolean isLocked() {
+        return isLocked;
+    }
+
+    public void setLocked(boolean islocked) {
+        this.isLocked = islocked;
     }
 }

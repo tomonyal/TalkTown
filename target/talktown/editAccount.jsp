@@ -25,15 +25,11 @@
                     </div>
                     <div class="form-group">
                         <label for="password">パスワード:</label>
-                        <input type="password" id="password" name="password" value="<%= user.getPassword() %>" required>
+                        <input type="password" id="password" name="password">
                     </div>
                     <div class="form-group">
                         <label for="email">メールアドレス:</label>
                         <input type="email" id="email" name="email" value="<%= user.getEmail() %>" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="city">市:</label>
-                        <input type="text" id="city" name="city" value="<%= user.getCity() %>" required>
                     </div>
                     <div class="form-group">
                         <label for="height">身長 (cm):</label>
@@ -45,15 +41,14 @@
                     </div>
                     <div class="form-group">
                         <label for="sex">性別:</label>
-                        <input type="text" id="sex" name="sex" value="<%= user.getSex() %>" required>
+                        <input type="radio" id="male" name="sex" value="male" <%= "male".equals(user.getSex()) ? "checked" : "" %>>
+                        <label for="male">男</label>
+                        <input type="radio" id="female" name="sex" value="female" <%= "female".equals(user.getSex()) ? "checked" : "" %>>
+                        <label for="female">女</label>
                     </div>
                     <div class="form-group">
                         <label for="birthDate">生年月日:</label>
                         <input type="date" id="birthDate" name="birthDate" value="<%= user.getBirthDate() %>" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="type">ユーザータイプ:</label>
-                        <input type="text" id="type" name="type" value="<%= user.getType() %>" required>
                     </div>
                     <div class="edit-button">
                         <input type="submit" value="保存">

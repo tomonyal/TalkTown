@@ -20,6 +20,8 @@ public class Post {
     private Timestamp updateAt;
     private String imagePath;
     private String s3Url;
+    private String externalId;
+    private String deletePassword;
 
     // コンストラクタ
     public Post(int userId, String subject, String content, String prefectures, String city, int height, int weight, int age, String email, String sex, boolean isPremium, int likeCount) {
@@ -171,5 +173,21 @@ public class Post {
     
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
+    }
+
+    public String getExternalId() {
+        return externalId;
+    }
+
+    public void setExternalId(String externalId) {
+        this.externalId = externalId;
+    }
+
+    public void setDeletePassword(String deletePassword) {
+        this.deletePassword = deletePassword;
+    }
+
+    public String getDeletePassword() {
+        return deletePassword;
     }
 }

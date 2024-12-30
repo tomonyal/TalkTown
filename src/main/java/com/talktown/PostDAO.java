@@ -141,22 +141,24 @@ public class PostDAO {
      * @throws SQLException データベース操作エラー
      */
     public void addPost(Post post) throws SQLException {
-        String query = "INSERT INTO posts (user_id, subject, content, prefectures, city, height, weight, age, email, sex, is_premium, like_count, s3_url, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setInt(1, post.getUserId());
-            preparedStatement.setString(2, post.getSubject());
-            preparedStatement.setString(3, post.getContent());
-            preparedStatement.setString(4, post.getPrefectures());
-            preparedStatement.setString(5, post.getCity());
-            preparedStatement.setInt(6, post.getHeight());
-            preparedStatement.setInt(7, post.getWeight());
-            preparedStatement.setInt(8, post.getAge());
-            preparedStatement.setString(9, post.getEmail());
-            preparedStatement.setString(10, post.getSex());
-            preparedStatement.setBoolean(11, post.isPremium());
-            preparedStatement.setInt(12, post.getLikeCount());
-            preparedStatement.setString(13, post.getS3Url());
-            preparedStatement.executeUpdate();
+        String query = "INSERT INTO posts (user_id, subject, content, prefectures, city, height, weight, age, email, sex, is_premium, like_count, external_id, created_at, updated_at, s3_url, delete_password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), ?, ?)";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, post.getUserId());
+            pstmt.setString(2, post.getSubject());
+            pstmt.setString(3, post.getContent());
+            pstmt.setString(4, post.getPrefectures());
+            pstmt.setString(5, post.getCity());
+            pstmt.setInt(6, post.getHeight());
+            pstmt.setInt(7, post.getWeight());
+            pstmt.setInt(8, post.getAge());
+            pstmt.setString(9, post.getEmail());
+            pstmt.setString(10, post.getSex());
+            pstmt.setBoolean(11, post.isPremium());
+            pstmt.setInt(12, post.getLikeCount());
+            pstmt.setString(13, post.getExternalId());
+            pstmt.setString(14, post.getS3Url());
+            pstmt.setString(15, post.getDeletePassword());
+            pstmt.executeUpdate();
         }
     }
 
@@ -185,9 +187,19 @@ public class PostDAO {
                     post.setCreateAt(resultSet.getTimestamp("created_at"));
                     post.setUpdateAt(resultSet.getTimestamp("updated_at"));
                     post.setS3Url(resultSet.getString("s3_url"));
+                    post.setExternalId(resultSet.getString("external_id"));
+                    post.setDeletePassword(resultSet.getString("delete_password"));
                 }
             }
         }
         return post;
+    }
+    // 投稿の削除
+    public void deletePost(int postId) throws SQLException {
+        String query = "DELETE FROM posts WHERE post_id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, postId);
+            preparedStatement.executeUpdate();
+        }
     }
 }

@@ -9,6 +9,15 @@
 <head>
     <title>投稿詳細</title>
     <link rel="stylesheet" type="text/css" href="css/postDetail.css">
+    <script>
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(function() {
+                alert('IDをコピーしました: ' + text);
+            }, function(err) {
+                alert('IDのコピーに失敗しました: ', err);
+            });
+        }
+    </script>
 </head>
 <body>
     <h2>投稿詳細</h2>
@@ -19,18 +28,33 @@
                 String prefecture = request.getParameter("prefecture");
                 String city = request.getParameter("city");
                 if (post != null) {
-                    String gender = post.getSex().equals("men") ? "男" : post.getSex().equals("women") ? "女" : post.getSex();
+                    String gender = post.getSex();
+                    if (gender.equals("male")) {
+                        gender = "男";
+                    } else if (gender.equals("female")) {
+                        gender = "女";
+                    }
+
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
                     String formattedCreateAt = post.getCreateAt().toLocalDateTime().format(formatter);
                     String formattedUpdateAt = post.getUpdateAt().toLocalDateTime().format(formatter);
+                    String imagePath = post.getS3Url();  // 画像URLを取得
+                    String externalId = post.getExternalId();
+                    String email = post.getEmail();  // メールアドレスを取得
             %>
                     <h3><%= post.getSubject() %></h3>
                     <div class="info-group">
                         <p><span class="label">身長:</span> <%= post.getHeight() %> cm</p>
                         <p><span class="label">体重:</span> <%= post.getWeight() %> kg</p>
-                        <p><span class="label">年齢:</span> <%= post.getAge() %></p>
+                        <p><span class="label">年齢:</span> <%= post.getAge() %> 歳</p>
                     </div>
                     <hr>
+                    <% if (imagePath != null && !imagePath.isEmpty()) { %>
+                        <div class="image-section">
+                            <img src="<%= imagePath %>" alt="添付画像" class="post-image">
+                        </div>
+                        <hr>
+                    <% } %>
                     <p><span class="label">内容:</span> <%= post.getContent() %></p>
                     <hr>
                     <div class="info-group">
@@ -44,13 +68,28 @@
                         <p><span class="label">投稿日時:</span> <%= formattedCreateAt %></p>
                         <p><span class="label">更新日時:</span> <%= formattedUpdateAt %></p>
                     </div>
-                    <!-- メールするボタンを追加 -->
                     <div class="footer">
-                        <button class="mail-button">
-                            <a href="mailto:example@example.com?subject=<%= post.getSubject() %>&body=内容:%20<%= post.getContent() %>%0A%0A身長:%20<%= post.getHeight() %>cm%0A体重:%20<%= post.getWeight() %>kg%0A年齢:%20<%= post.getAge() %>歳%0A性別:%20<%= gender %>%0A投稿日時:%20<%= formattedCreateAt %>%0A更新日時:%20<%= formattedUpdateAt %>">
-                                メールする
-                            </a>
-                        </button>
+                        <% if (email != null && !email.isEmpty()) { %>
+                            <button class="mail-button">
+                                <a href="mailto:<%= email %>?subject=<%= post.getSubject() %>&body=内容:%20<%= post.getContent() %>%0A%0A身長:%20<%= post.getHeight() %>cm%0A体重:%20<%= post.getWeight() %>kg%0A年齢:%20<%= post.getAge() %>歳%0A性別:%20<%= gender %>%0A投稿日時:%20<%= formattedCreateAt %>%0A更新日時:%20<%= formattedUpdateAt %>">
+                                    メールする
+                                </a>
+                            </button>
+                        <% } %>
+                        <% if (externalId != null && !externalId.isEmpty()) { %>
+                            <button class="mail-button" onclick="copyToClipboard('<%= externalId %>')">IDをコピー</button>
+                        <% } %>
+                    </div>
+                    
+                    <!-- 削除フォームの追加 -->
+                    <hr>
+                    <div class="delete-section">
+                        <h3>投稿削除</h3>
+                        <form action="deletePost" method="post">
+                            <input type="hidden" name="postId" value="<%= post.getPostId() %>">
+                            削除パスワード: <input type="password" name="deletePassword" required><br>
+                            <input type="submit" value="削除">
+                        </form>
                     </div>
             <%
                 } else {

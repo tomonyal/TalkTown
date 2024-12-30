@@ -16,11 +16,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
-
+import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
-import software.amazon.awssdk.services.s3.model.PutObjectResponse;
-import software.amazon.awssdk.core.sync.RequestBody;
 
 /**
  * 新規投稿サーブレット
@@ -141,12 +139,20 @@ public class NewPostServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         User user = (session != null && session.getAttribute("user") != null) ? (User) session.getAttribute("user") : null;
+        String csrfToken = request.getParameter("csrfToken");
+        String sessionCsrfToken = (String) session.getAttribute("csrfToken");
+        if (csrfToken == null || !csrfToken.equals(sessionCsrfToken)) {
+            throw new ServletException("CSRFトークンが無効です。");
+        }
 
         boolean isMultipart = request.getContentType() != null && request.getContentType().toLowerCase().startsWith("multipart/");
         Map<String, String> formFields = new HashMap<>();
         String fileName = null; // アップロードされたファイル名
         InputStream fileInputStream = null;
-
+        Part filePart = request.getPart("image");
+        if (filePart.getSize() > 3 * 1024 * 1024) { // 3MB
+            throw new ServletException("画像サイズが3MBを超えています。");
+        }
         if (isMultipart) {
             try {
                 for (Part part : request.getParts()) {
@@ -166,22 +172,28 @@ public class NewPostServlet extends HttpServlet {
             throw new ServletException("Form must have enctype=multipart/form-data.");
         }
 
-        String name = formFields.get("name");
-        String prefectures = formFields.get("prefectures");
-        String city = formFields.get("city");
+        String name = SecurityUtils.sanitize(formFields.get("name"));
+        String prefectures = SecurityUtils.sanitize(formFields.get("prefectures"));
+        String city = SecurityUtils.sanitize(formFields.get("city"));
         int height = parseIntOrDefault(formFields.get("height"), (user != null) ? user.getHeight() : 0);
         int weight = parseIntOrDefault(formFields.get("weight"), (user != null) ? user.getWeight() : 0);
         int age = parseIntOrDefault(formFields.get("age"), (user != null) ? user.getAge() : 0);
-        String subject = formFields.get("subject");
-        String content = formFields.get("content");
-        String email = formFields.get("email");
-        String deletePassword = formFields.get("deletePassword");
+        String subject = SecurityUtils.sanitize(formFields.get("subject"));
+        String content = SecurityUtils.sanitize(formFields.get("content"));
+        String deletePassword = SecurityUtils.sanitize(formFields.get("deletePassword"));
         String sex = formFields.get("sex");
+        String emailOrId = request.getParameter("emailOrId");
         boolean isPremium = (user != null) && "premium".equals(user.getType());
         int likeCount = 0;
-
+        String email = null;
+        String externalId = null;
         Integer userId = (user != null) ? user.getUserId() : 0;
         String userSex = (user != null) ? user.getSex() : sex;
+        if ("email".equals(emailOrId)) {
+            email = SecurityUtils.sanitize(request.getParameter("email")); 
+        } else if ("id".equals(emailOrId)) { 
+            externalId = SecurityUtils.sanitize(request.getParameter("externalId"));
+        }
 
         session.setAttribute("lastPostPrefecture", prefectures);
         session.setAttribute("lastPostCity", city);
@@ -189,10 +201,12 @@ public class NewPostServlet extends HttpServlet {
         try {
             PostDAO postDAO = new PostDAO();
             Post post = new Post(userId, subject, content, prefectures, city, height, weight, age, email, userSex, isPremium, likeCount);
-            post.setImagePath(fileName); // 画像ファイルのパスをセット
+            post.setImagePath(SecurityUtils.sanitize(fileName)); // 画像ファイルのパスをセット
+            post.setExternalId(externalId);
+            post.setDeletePassword(SecurityUtils.sanitize(deletePassword));
 
             if (fileInputStream != null && fileName != null && !fileName.isEmpty()) {
-                String s3Url = uploadToS3(fileName, fileInputStream);
+                String s3Url = uploadToS3(SecurityUtils.sanitize(fileName), fileInputStream);
                 post.setS3Url(s3Url);
             }
 

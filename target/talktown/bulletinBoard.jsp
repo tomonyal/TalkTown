@@ -53,7 +53,7 @@
                                 <span class="city-name">市区町村: <%= post.getCity() %></span><br>
                             <% } %>
                                 - <%= post.getSubject() %> 
-                                <br>- 身長: <%= post.getHeight() %>cm - 体重: <%= post.getWeight() %>kg - 年齢: <%= post.getAge() %> - 性別: <%= post.getSex().equals("men") ? "男" : post.getSex().equals("women") ? "女" : post.getSex() %>
+                                <br>- 身長: <%= post.getHeight() %>cm - 体重: <%= post.getWeight() %>kg - 年齢: <%= post.getAge() %> - 性別: <%= post.getSex().equals("male") ? "男" : post.getSex().equals("female") ? "女" : post.getSex() %>
                                 <br>- 登録日: <%= formattedCreateAt %>
                                 <% if (post.getS3Url() != null && !post.getS3Url().isEmpty()) { %>
                                     <br><a href="<%= post.getS3Url() %>" class="image-link" style="color:red;">画像</a>

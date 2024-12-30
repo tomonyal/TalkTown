@@ -2,7 +2,7 @@ package com.talktown;
 
 import java.io.IOException;
 import java.sql.SQLException;
-
+import java.util.logging.Logger;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.Cookie;
@@ -18,6 +18,7 @@ import jakarta.servlet.http.HttpSession;
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
+    private static final Logger logger = Logger.getLogger(LoginServlet.class.getName());
 
     /**
      * POSTリクエストを処理します。
@@ -38,7 +39,9 @@ public class LoginServlet extends HttpServlet {
             UserDAO userDAO = new UserDAO();
             User user = userDAO.authenticate(username, password);
 
-            if (user != null) {
+            if (user != null && !user.isLocked()) {
+                SecurityUtils.loginSucceeded(username);
+
                 // セッションの作成
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user);
@@ -50,7 +53,12 @@ public class LoginServlet extends HttpServlet {
 
                 // メインページにリダイレクト
                 response.sendRedirect("mainPage.jsp");
+            } else if (user != null && user.isLocked()) {
+                response.setContentType("text/html");
+                response.getWriter().write("アカウントがロックされています。");
             } else {
+                SecurityUtils.loginFailed(username);
+                logger.warning("ログインに失敗しました。残り試行回数: " + (SecurityUtils.MAX_ATTEMPT - SecurityUtils.getAttempts(username)));
                 response.setContentType("text/html");
                 response.getWriter().write("無効なユーザー名またはパスワードです。");
             }

@@ -3,21 +3,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>メインページ</title>
+    <title>TalkTown(市区町村で絞り込める異性愛、同性愛の出会い掲示板 画像、ID交換、メール)</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
-    <!-- 管理人からのメッセージ枠をここに追加 -->
     <div class="admin-message">
         <h3>管理人からのメッセージ</h3>
-        <p>ここに管理人からの重要なお知らせやメッセージが表示されます。</p>
+        <p>
+            <%
+                String filePath = application.getRealPath("/WEB-INF/admin_message.txt");
+                java.io.BufferedReader reader = new java.io.BufferedReader(new java.io.FileReader(filePath));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    out.println(line);
+                }
+                reader.close();
+            %>
+        </p>
         <div class="admin-request">
             <a href="requestPage.jsp">管理者への要望・報告等はこちら</a>
         </div>
+        <div class="admin-request">
+            <br><a href="https://www.paypal.com/ncp/payment/6EYVK8TF9A2DG">寄付はこちら（サーバ維持費、機能拡充に充てさせて頂きます。）</a>
+        </div>
     </div>
-
     <div class="main-content">
-        <h2>メインページ</h2>
+        <h2>TalkTown(市区町村で絞り込める異性愛、同性愛の出会い掲示板 画像、ID交換、メール掲示板)</h2>
+        <h3>画像市場</h3>
+        <div class="image-market">
+            <!--<a href="imageMarket"> --><a href="#">画像市場へ(準備中)</a>
+        </div>
         <h3>都道府県一覧</h3>
         <div class="regions-container">
             <div class="region-block">
@@ -103,15 +118,5 @@
             </ul>
         </div>
     </div>
-    <h3>画像市場</h3>
-    <div class="image-market">
-        <a href="imageMarket">画像市場へ</a>
-    </div>
-    <h3>上位ユーザー</h3>
-    <ul class="top-users">
-        <li>ユーザー1</li>
-        <li>ユーザー2</li>
-        <li>ユーザー3</li>
-    </ul>
 </body>
 </html>

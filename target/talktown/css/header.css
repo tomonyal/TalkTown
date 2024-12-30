@@ -67,3 +67,9 @@ nav ul li a:hover {
     padding-top: 70px; /* ヘッダーの高さ分のパディングを追加 */
     margin: 20px;
 }
+
+.error-message {
+    color: red;
+    text-align: center;
+    margin-top: 10px;
+}
