@@ -108,8 +108,8 @@
                     <textarea id="content" name="content" rows="10" required></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="image">添付画像:</label>
-                    <input type="file" id="image" name="image">
+                    <label for="image">添付画像(※3MBまで):</label>
+                    <input type="file" id="image" name="image" accept="image/*">
                 </div>
                 <div class="form-group">
                     <label for="deletePassword">削除用パスワード:</label>

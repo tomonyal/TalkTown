@@ -5,7 +5,9 @@ import java.io.InputStream;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import jakarta.servlet.ServletException;
@@ -137,6 +139,9 @@ public class NewPostServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // 許可する画像ファイルの拡張子
+       final List<String> ALLOWED_EXTENSIONS = Arrays.asList(".jpg", ".jpeg", ".png", ".gif", ".bmp", ".webp", ".tiff", ".heic");
+
         HttpSession session = request.getSession();
         User user = (session != null && session.getAttribute("user") != null) ? (User) session.getAttribute("user") : null;
         String csrfToken = request.getParameter("csrfToken");
@@ -150,27 +155,6 @@ public class NewPostServlet extends HttpServlet {
         String fileName = null; // アップロードされたファイル名
         InputStream fileInputStream = null;
         Part filePart = request.getPart("image");
-        if (filePart.getSize() > 3 * 1024 * 1024) { // 3MB
-            throw new ServletException("画像サイズが3MBを超えています。");
-        }
-        if (isMultipart) {
-            try {
-                for (Part part : request.getParts()) {
-                    if (part.getSubmittedFileName() == null) {
-                        formFields.put(part.getName(), new String(part.getInputStream().readAllBytes(), StandardCharsets.UTF_8));
-                    } else {
-                        fileName = part.getSubmittedFileName();
-                        if (fileName != null && !fileName.isEmpty()) {
-                            fileInputStream = part.getInputStream(); // 後で使用するために入力ストリームを保存
-                        }
-                    }
-                }
-            } catch (Exception e) {
-                throw new ServletException("Multipart form parsing error", e);
-            }
-        } else {
-            throw new ServletException("Form must have enctype=multipart/form-data.");
-        }
 
         String name = SecurityUtils.sanitize(formFields.get("name"));
         String prefectures = SecurityUtils.sanitize(formFields.get("prefectures"));
@@ -195,6 +179,48 @@ public class NewPostServlet extends HttpServlet {
             externalId = SecurityUtils.sanitize(request.getParameter("externalId"));
         }
 
+        prefectures = prefectures != null ? prefectures : "";
+        city = city != null ? city : "";
+
+        String encodedPrefecture = URLEncoder.encode(prefectures, StandardCharsets.UTF_8.toString());
+        String encodedCity = URLEncoder.encode(city, StandardCharsets.UTF_8.toString());
+        if (filePart.getSize() > 3 * 1024 * 1024) { // 3MB
+            request.setAttribute("error", "画像サイズが3MBを超えています。");
+            request.setAttribute("prefecture", prefectures);
+            request.setAttribute("city", city);
+            request.getRequestDispatcher("newPost.jsp").forward(request, response);
+            return;
+        }
+        if (isMultipart) {
+            try {
+                for (Part part : request.getParts()) {
+                    if (part.getSubmittedFileName() == null) {
+                        formFields.put(part.getName(), new String(part.getInputStream().readAllBytes(), StandardCharsets.UTF_8));
+                    } else {
+                        fileName = part.getSubmittedFileName();
+                        if (fileName != null && !fileName.isEmpty()) {
+                            fileInputStream = part.getInputStream(); // 後で使用するために入力ストリームを保存
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                throw new ServletException("Multipart form parsing error", e);
+            }
+        } else {
+            throw new ServletException("Form must have enctype=multipart/form-data.");
+        }
+
+        if (fileName != null && !fileName.isEmpty()) {
+            boolean isAllowed = ALLOWED_EXTENSIONS.stream().anyMatch(fileName.toLowerCase()::endsWith);
+            if (!isAllowed) {
+                request.setAttribute("error", "許可されていないファイル形式です。jpg、jpeg、png、gif、bmp、webp、tiff、heicのみ許可されています。");
+                request.setAttribute("prefecture", prefectures);
+                request.setAttribute("city", city);
+                request.getRequestDispatcher("newPost.jsp").forward(request, response);
+                return;
+            }
+        }
+
         session.setAttribute("lastPostPrefecture", prefectures);
         session.setAttribute("lastPostCity", city);
 
@@ -213,9 +239,7 @@ public class NewPostServlet extends HttpServlet {
             postDAO.addPost(post);
 
             // パラメータをエンコードしてリダイレクト
-            String encodedPrefecture = URLEncoder.encode(prefectures, StandardCharsets.UTF_8.toString());
-            String encodedCity = URLEncoder.encode(city, StandardCharsets.UTF_8.toString());
-            String redirectUrl = String.format("bulletinBoard.jsp?prefecture=%s&city=%s", encodedPrefecture, encodedCity);
+            String redirectUrl = String.format("bulletinBoard?prefecture=%s&city=%s", encodedPrefecture, encodedCity);
             response.sendRedirect(redirectUrl);
         } catch (SQLException e) {
             throw new ServletException("投稿処理エラー", e);
