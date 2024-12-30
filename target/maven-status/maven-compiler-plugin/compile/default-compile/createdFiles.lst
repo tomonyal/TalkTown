@@ -5,6 +5,7 @@ com\talktown\ImageMarketServlet.class
 com\talktown\PostDAO.class
 com\talktown\User.class
 com\talktown\LoginServlet.class
+com\talktown\RateLimitingFilter.class
 com\talktown\UserRegistrationServlet.class
 com\talktown\UserDAO.class
 com\talktown\UploadImageServlet.class
