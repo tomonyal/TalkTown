@@ -14,7 +14,7 @@ public class DeletePostServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String deletePassword = request.getParameter("deletePassword");
+        String deletePassword = SecurityUtils.sanitize(request.getParameter("deletePassword"));
         int postId = Integer.parseInt(request.getParameter("postId"));
 
         try {

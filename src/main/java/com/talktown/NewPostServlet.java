@@ -134,7 +134,7 @@ public class NewPostServlet extends HttpServlet {
         }
 
         request.setAttribute("cities", cities);
-        request.setAttribute("selectedCity", city); // 選択された市区町村をリクエスト属性に設定
+        request.setAttribute("selectedCity", city);
         request.getRequestDispatcher("newPost.jsp").forward(request, response);
     }
 
@@ -155,6 +155,26 @@ public class NewPostServlet extends HttpServlet {
         String fileName = null; // アップロードされたファイル名
         InputStream fileInputStream = null;
         Part filePart = request.getPart("image");
+
+        // 画像アップロードの有無を確認し、画像がアップロードされていたら画像を保存する
+        if (isMultipart) {
+            try {
+                for (Part part : request.getParts()) {
+                    if (part.getSubmittedFileName() == null) {
+                        formFields.put(part.getName(), new String(part.getInputStream().readAllBytes(), StandardCharsets.UTF_8));
+                    } else {
+                        fileName = part.getSubmittedFileName();
+                        if (fileName != null && !fileName.isEmpty()) {
+                            fileInputStream = part.getInputStream(); // 後で使用するために入力ストリームを保存
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                throw new ServletException("Multipart form parsing error", e);
+            }
+        } else {
+            throw new ServletException("Form must have enctype=multipart/form-data.");
+        }
 
         String name = SecurityUtils.sanitize(formFields.get("name"));
         String prefectures = SecurityUtils.sanitize(formFields.get("prefectures"));
@@ -188,36 +208,24 @@ public class NewPostServlet extends HttpServlet {
             request.setAttribute("error", "画像サイズが3MBを超えています。");
             request.setAttribute("prefecture", prefectures);
             request.setAttribute("city", city);
-            request.getRequestDispatcher("newPost.jsp").forward(request, response);
+            request.getRequestDispatcher("bulletinBoard.jsp").forward(request, response);
             return;
-        }
-        if (isMultipart) {
-            try {
-                for (Part part : request.getParts()) {
-                    if (part.getSubmittedFileName() == null) {
-                        formFields.put(part.getName(), new String(part.getInputStream().readAllBytes(), StandardCharsets.UTF_8));
-                    } else {
-                        fileName = part.getSubmittedFileName();
-                        if (fileName != null && !fileName.isEmpty()) {
-                            fileInputStream = part.getInputStream(); // 後で使用するために入力ストリームを保存
-                        }
-                    }
-                }
-            } catch (Exception e) {
-                throw new ServletException("Multipart form parsing error", e);
-            }
-        } else {
-            throw new ServletException("Form must have enctype=multipart/form-data.");
         }
 
         if (fileName != null && !fileName.isEmpty()) {
             boolean isAllowed = ALLOWED_EXTENSIONS.stream().anyMatch(fileName.toLowerCase()::endsWith);
             if (!isAllowed) {
+                // エラーメッセージと他のパラメータをリクエスト属性として設定
                 request.setAttribute("error", "許可されていないファイル形式です。jpg、jpeg、png、gif、bmp、webp、tiff、heicのみ許可されています。");
                 request.setAttribute("prefecture", prefectures);
                 request.setAttribute("city", city);
-                request.getRequestDispatcher("newPost.jsp").forward(request, response);
-                return;
+
+                // フォワード先のURLを設定
+                String forwardUrl = "bulletinBoard.jsp";
+
+                // リクエストをフォワード
+                request.getRequestDispatcher(forwardUrl).forward(request, response);
+
             }
         }
 
@@ -239,7 +247,7 @@ public class NewPostServlet extends HttpServlet {
             postDAO.addPost(post);
 
             // パラメータをエンコードしてリダイレクト
-            String redirectUrl = String.format("bulletinBoard?prefecture=%s&city=%s", encodedPrefecture, encodedCity);
+            String redirectUrl = String.format("posts?prefecture=%s&city=%s", encodedPrefecture, encodedCity);
             response.sendRedirect(redirectUrl);
         } catch (SQLException e) {
             throw new ServletException("投稿処理エラー", e);

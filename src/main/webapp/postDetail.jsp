@@ -80,17 +80,11 @@
                             <button class="mail-button" onclick="copyToClipboard('<%= externalId %>')">IDをコピー</button>
                         <% } %>
                     </div>
-                    
-                    <!-- 削除フォームの追加 -->
-                    <hr>
-                    <div class="delete-section">
-                        <h3>投稿削除</h3>
-                        <form action="deletePost" method="post">
-                            <input type="hidden" name="postId" value="<%= post.getPostId() %>">
-                            削除パスワード: <input type="password" name="deletePassword" required><br>
-                            <input type="submit" value="削除">
-                        </form>
-                    </div>
+                    <form action="deletePost" method="post">
+                        <input type="hidden" name="postId" value="<%= post.getPostId() %>">
+                        削除パスワード: <input type="password" name="deletePassword" required><br>
+                        <input type="submit" value="削除">
+                    </form>
             <%
                 } else {
             %>

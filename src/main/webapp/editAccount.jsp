@@ -5,15 +5,13 @@
 <html>
 <head>
     <title>アカウント情報編集</title>
-    <link rel="stylesheet" type="text/css" href="css/account.css">
+    <link rel="stylesheet" type="text/css" href="css/editAccount.css">
 </head>
 <body>
     <div class="main-content">
         <h2>アカウント情報編集</h2>
         <div class="container">
             <div class="account-management">
-                <a href="mainPage.jsp">メインページへ戻る</a>
-                <h3>ユーザー情報編集</h3>
                 <%
                     if (currentSession != null && currentSession.getAttribute("user") != null) {
                         User user = (User) currentSession.getAttribute("user");

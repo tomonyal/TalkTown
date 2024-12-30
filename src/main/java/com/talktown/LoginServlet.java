@@ -3,6 +3,7 @@ package com.talktown;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Logger;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.Cookie;
@@ -31,8 +32,8 @@ public class LoginServlet extends HttpServlet {
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // リクエストパラメータの取得
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
+        String username = SecurityUtils.sanitize(request.getParameter("username"));
+        String password = SecurityUtils.sanitize(request.getParameter("password"));
 
         try {
             // ユーザーの認証

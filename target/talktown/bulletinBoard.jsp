@@ -23,7 +23,9 @@
                 prefecture = prefecture != null ? URLDecoder.decode(prefecture, StandardCharsets.UTF_8.toString()) : null;
                 city = city != null ? URLDecoder.decode(city, StandardCharsets.UTF_8.toString()) : null;
             %>
-            <button class="new-post"><a href="newPost?prefecture=<%= prefecture != null ? URLEncoder.encode(prefecture, StandardCharsets.UTF_8.toString()) : "" %>&city=<%= city != null ? URLEncoder.encode(city, StandardCharsets.UTF_8.toString()) : "" %>">新規投稿</a></button>
+            <div class="new-post">
+                <a href="newPost?prefecture=<%= prefecture != null ? URLEncoder.encode(prefecture, StandardCharsets.UTF_8.toString()) : "" %>&city=<%= city != null ? URLEncoder.encode(city, StandardCharsets.UTF_8.toString()) : "" %>">新規投稿</a>
+            </div>
             <div class="filter">
                 <label for="city">市区町村で絞り込み:</label>
                 <select id="city" name="city" onchange="filterPosts()">
@@ -42,8 +44,16 @@
             <%
                 List<Post> posts = (List<Post>) request.getAttribute("posts");
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+                int pageSize = 15; // 一ページに表示する投稿数
+                int currentPage = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
+                int totalPosts = posts != null ? posts.size() : 0;
+                int totalPages = (int) Math.ceil((double) totalPosts / pageSize);
+                int start = (currentPage - 1) * pageSize;
+                int end = Math.min(start + pageSize, totalPosts);
+
                 if (posts != null) {
-                    for (Post post : posts) {
+                    for (int i = start; i < end; i++) {
+                        Post post = posts.get(i);
                         String genderClass = post.getSex().equals("male") ? "male" : post.getSex().equals("female") ? "female" : "";
                         String formattedCreateAt = post.getCreateAt().toLocalDateTime().format(formatter);
             %>
@@ -56,7 +66,7 @@
                                 <br>- 身長: <%= post.getHeight() %>cm - 体重: <%= post.getWeight() %>kg - 年齢: <%= post.getAge() %> - 性別: <%= post.getSex().equals("male") ? "男" : post.getSex().equals("female") ? "女" : post.getSex() %>
                                 <br>- 登録日: <%= formattedCreateAt %>
                                 <% if (post.getS3Url() != null && !post.getS3Url().isEmpty()) { %>
-                                    <br><a href="<%= post.getS3Url() %>" class="image-link" style="color:red;">画像</a>
+                                    <br><p class="image-link" style="color:red;margin-top: 0px;margin-bottom: 0px;">画像あり</p>
                                 <% } %>
                             </a>
                         </div>
@@ -68,6 +78,14 @@
             <%
                 }
             %>
+        </div>
+        <div class="pagination">
+            <% if (currentPage > 1) { %>
+                <a href="?page=<%= currentPage - 1 %>&prefecture=<%= prefecture != null ? URLEncoder.encode(prefecture, StandardCharsets.UTF_8.toString()) : "" %>&city=<%= city != null ? URLEncoder.encode(city, StandardCharsets.UTF_8.toString()) : "" %>">前へ</a>
+            <% } %>
+            <% if (currentPage < totalPages) { %>
+                <a href="?page=<%= currentPage + 1 %>&prefecture=<%= prefecture != null ? URLEncoder.encode(prefecture, StandardCharsets.UTF_8.toString()) : "" %>&city=<%= city != null ? URLEncoder.encode(city, StandardCharsets.UTF_8.toString()) : "" %>">次へ</a>
+            <% } %>
         </div>
         <div class="footer">
             <button class="back"><a href="mainPage.jsp">メインページへ戻る</a></button>

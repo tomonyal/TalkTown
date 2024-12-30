@@ -29,10 +29,9 @@ public class UserRegistrationServlet extends HttpServlet {
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // リクエストパラメータの取得
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String email = request.getParameter("email");
-        String city = request.getParameter("city");
+        String username = SecurityUtils.sanitize(request.getParameter("username"));
+        String password = SecurityUtils.sanitize(request.getParameter("password"));
+        String email = SecurityUtils.sanitize(request.getParameter("email"));
         int height = Integer.parseInt(request.getParameter("height"));
         int weight = Integer.parseInt(request.getParameter("weight"));
         Date birthDate = Date.valueOf(request.getParameter("birth_date"));
@@ -50,7 +49,7 @@ public class UserRegistrationServlet extends HttpServlet {
                 return;
             }
 
-            userDAO.registerUser(username, password, email, city, height, weight, birthDate, sex, type);
+            userDAO.registerUser(username, password, email, height, weight, birthDate, sex, type);
 
             // 登録完了画面へリダイレクト
             response.sendRedirect("completeRegistration.jsp");

@@ -18,8 +18,8 @@ public class ReportServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String requestType = request.getParameter("requestType");
-        String requestContent = request.getParameter("requestContent");
+        String requestType = SecurityUtils.sanitize(request.getParameter("requestType"));
+        String requestContent = SecurityUtils.sanitize(request.getParameter("requestContent"));
 
         HttpSession session = request.getSession(false);
         int userId = (session != null && session.getAttribute("user_id") != null) ? (int) session.getAttribute("user_id") : 0;

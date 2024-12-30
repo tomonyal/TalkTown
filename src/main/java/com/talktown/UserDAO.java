@@ -158,18 +158,17 @@ public class UserDAO {
         return null;
     }
 
-    public void registerUser(String username, String password, String email, String city, int height, int weight, Date birthDate, String sex, String type) throws SQLException {
-        String query = "INSERT INTO users (username, password, email, city, height, weight, birth_date, sex, type) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    public void registerUser(String username, String password, String email, int height, int weight, Date birthDate, String sex, String type) throws SQLException {
+        String query = "INSERT INTO users (username, password, email, height, weight, birth_date, sex, type) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, username);
             preparedStatement.setString(2, SecurityUtils.hashPassword(password)); // ハッシュ化されたパスワードを保存
             preparedStatement.setString(3, email);
-            preparedStatement.setString(4, city);
-            preparedStatement.setInt(5, height);
-            preparedStatement.setInt(6, weight);
-            preparedStatement.setDate(7, birthDate);
-            preparedStatement.setString(8, sex);
-            preparedStatement.setString(9, type);
+            preparedStatement.setInt(4, height);
+            preparedStatement.setInt(5, weight);
+            preparedStatement.setDate(6, birthDate);
+            preparedStatement.setString(7, sex);
+            preparedStatement.setString(8, type);
             preparedStatement.executeUpdate();
         }
     }

@@ -21,9 +21,9 @@ public class AccountUpdateServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // リクエストパラメータの取得
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String email = request.getParameter("email");
+        String username = SecurityUtils.sanitize(request.getParameter("username"));
+        String password = SecurityUtils.sanitize(request.getParameter("password"));
+        String email = SecurityUtils.sanitize(request.getParameter("email"));
         int height = Integer.parseInt(request.getParameter("height"));
         int weight = Integer.parseInt(request.getParameter("weight"));
         Date birthDate = Date.valueOf(request.getParameter("birthDate"));

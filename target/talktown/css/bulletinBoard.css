@@ -27,18 +27,13 @@ h2 {
     margin-bottom: 20px;
 }
 
-.new-post {
+.new-post a {
     background-color: #007bff;
     color: #fff;
     border: none;
     padding: 10px 20px;
     cursor: pointer;
     border-radius: 5px;
-    text-decoration: none;
-}
-
-.new-post a {
-    color: #fff;
     text-decoration: none;
 }
 

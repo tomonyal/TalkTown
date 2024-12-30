@@ -20,8 +20,8 @@ public class PostServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String city = request.getParameter("city");
-        String prefecture = request.getParameter("prefecture");
+        String city = SecurityUtils.sanitize(request.getParameter("city"));
+        String prefecture = SecurityUtils.sanitize(request.getParameter("prefecture"));
         
         // エンコードされた値をデコード
         city = city != null ? URLDecoder.decode(city, StandardCharsets.UTF_8.toString()) : null;

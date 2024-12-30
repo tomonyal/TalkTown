@@ -25,6 +25,7 @@
         </div>
         <div class="admin-request">
             <br><a href="https://www.paypal.com/ncp/payment/6EYVK8TF9A2DG">寄付はこちら（サーバ維持費、機能拡充に充てさせて頂きます。）</a>
+            <p style="color: red;">寄付を頂いた方でユーザ登録がお済みの方は、管理者への要望でユーザ名を教えてください。特典を計画しています。</p>
         </div>
     </div>
     <div class="main-content">

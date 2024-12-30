@@ -171,14 +171,14 @@ public class PostDAO {
                 if (resultSet.next()) {
                     post = new Post(
                         resultSet.getInt("user_id"),
-                        resultSet.getString("subject"),
-                        resultSet.getString("content"),
-                        resultSet.getString("prefectures"),
-                        resultSet.getString("city"),
+                        SecurityUtils.sanitize(resultSet.getString("subject")),
+                        SecurityUtils.sanitize(resultSet.getString("content")),
+                        SecurityUtils.sanitize(resultSet.getString("prefectures")),
+                        SecurityUtils.sanitize(resultSet.getString("city")),
                         resultSet.getInt("height"),
                         resultSet.getInt("weight"),
                         resultSet.getInt("age"),
-                        resultSet.getString("email"),
+                        SecurityUtils.sanitize(resultSet.getString("email")),
                         resultSet.getString("sex"),
                         resultSet.getBoolean("is_premium"),
                         resultSet.getInt("like_count")
