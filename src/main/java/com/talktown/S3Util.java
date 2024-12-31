@@ -22,9 +22,11 @@ public class S3Util {
         return S3Client.builder()
                 .region(REGION)
                 .endpointOverride(URI.create(ENDPOINT))
-                .credentialsProvider(ProfileCredentialsProvider.create())
+                .credentialsProvider(ProfileCredentialsProvider.builder()
+                    .profileName("default")
+                    .build())
                 .build();
-    }
+    }    
 
     public static String uploadToS3(String fileName, InputStream is) throws IOException {
         S3Client s3Client = createS3Client();
