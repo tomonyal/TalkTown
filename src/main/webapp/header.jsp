@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.talktown.User" %>
+<%@ page session="false" %>
 <!DOCTYPE html>
 <html>
 <head>
