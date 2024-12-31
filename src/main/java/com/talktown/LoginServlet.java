@@ -54,6 +54,13 @@ public class LoginServlet extends HttpServlet {
                 userCookie.setHttpOnly(true); // HttpOnly属性を追加
                 response.addCookie(userCookie);
 
+                Cookie jsessionidCookie = new Cookie("JSESSIONID", session.getId());
+                jsessionidCookie.setPath("/"); // パスをルートに設定
+                jsessionidCookie.setMaxAge(60 * 60); // 1時間
+                jsessionidCookie.setSecure(true); // セキュア属性を追加
+                jsessionidCookie.setHttpOnly(true); // HttpOnly属性を追加
+                response.addCookie(jsessionidCookie);
+
                 // メインページにリダイレクト
                 response.sendRedirect("mainPage.jsp");
             } else if (user != null && user.isLocked()) {
