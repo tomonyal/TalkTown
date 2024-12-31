@@ -12,6 +12,7 @@
             <ul>
                 <%
                     HttpSession currentSession = request.getSession(false);
+                    System.out.println("session:" + currentSession);
                     if (currentSession != null && currentSession.getAttribute("user") != null) {
                         User user = (User) currentSession.getAttribute("user");
                 %>
