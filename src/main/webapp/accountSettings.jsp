@@ -37,10 +37,10 @@
                 </div>
                 <div class="option-buttons">
                     <form action="purchasePoints.jsp" method="post" style="display: inline;">
-                        <input type="submit" value="ポイント購入" disabled>
+                        <input type="submit" value="ポイント購入(準備中)" disabled>
                     </form>
                     <form action="premiumMembership.jsp" method="post" style="display: inline;">
-                        <input type="submit" value="プレミアムユーザーになる" disabled>
+                        <input type="submit" value="プレミアムユーザーになる(準備中)" disabled>
                     </form>
                 </div>
                 <% } else { %>
