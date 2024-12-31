@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>TalkTown(市区町村で絞り込める異性愛、同性愛の出会い掲示板 画像、ID交換、メール)</title>
+    <title>TalkTown(市区町村で絞り込める異性愛、同性愛（ゲイ・レズ・ノンケ）出会い掲示板 画像、LINE カカオID交換、メール)</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
